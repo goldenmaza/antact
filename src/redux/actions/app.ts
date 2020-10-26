@@ -3,18 +3,18 @@ import {
     REQ_API_DATA,
     RCV_API_DATA,
     ERR_API_DATA,
-    SERVICE_ENDPOINT,
+    CLEAR_API_DATA,
     APIResponse,
-    Error
+    APIError
 } from '../constants/app';
 import axios from 'axios';
 
-export const getAPIData = () => (dispatch: Dispatch):void => {
+export const getAPIData = (endpoint: string) => (dispatch: Dispatch):void => {
     dispatch({
         type: REQ_API_DATA
     });
 
-    axios.request<APIResponse>({ url: SERVICE_ENDPOINT })
+    axios.request<APIResponse | APIError>({ url: endpoint })
         .then((response) => dispatch({
             response,
             type: RCV_API_DATA
@@ -23,4 +23,10 @@ export const getAPIData = () => (dispatch: Dispatch):void => {
             error,
             type: ERR_API_DATA
         }));
+};
+
+export const clearData = () => (dispatch: Dispatch):void => {
+    dispatch({
+        type: CLEAR_API_DATA
+    });
 };
