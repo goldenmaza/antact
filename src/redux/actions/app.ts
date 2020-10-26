@@ -4,22 +4,22 @@ import {
     RCV_API_DATA,
     ERR_API_DATA,
     SERVICE_ENDPOINT,
-    Response,
+    APIResponse,
     Error
 } from '../constants/app';
 import axios from 'axios';
 
-export const getAPIData = () => (dispatch: Dispatch) => {
+export const getAPIData = () => (dispatch: Dispatch):void => {
     dispatch({
         type: REQ_API_DATA
     });
 
-    axios.get(SERVICE_ENDPOINT)
-        .then((response: Response) => dispatch({
+    axios.request<APIResponse>({ url: SERVICE_ENDPOINT })
+        .then((response) => dispatch({
             response,
             type: RCV_API_DATA
         }))
-        .catch((error: Error) => dispatch({
+        .catch((error) => dispatch({
             error,
             type: ERR_API_DATA
         }));

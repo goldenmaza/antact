@@ -7,23 +7,22 @@ import {
     AppReducer
 } from '../constants/app';
 
-export const appComponent = (state: appState, action: AnyAction): AppReducer => {
+export const appComponent = (state = appState, action: AnyAction): AppReducer => {
     switch(action.type) {
         case REQ_API_DATA:
             return {
-                ...state
-                //variable: null
+                ...state,
+                response: null
                 //failure: null
             };
         case RCV_API_DATA:
             return {
-                ...state
-                //variable: action.response
+                ...state,
+                response: action.response.data.results[0]
             };
         case ERR_API_DATA:
             return {
                 ...state
-                //variable: null
                 //failure: action.error
             };
         default:

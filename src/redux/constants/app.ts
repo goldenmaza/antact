@@ -21,22 +21,22 @@ export interface Timezone {
 
 export interface Location {
     street: Street;
-    city: string,
-    state: string,
-    country: string,
-    postcode: number
-    coordinates: Coordinates
-    timezone: Timezone
+    city: string;
+    state: string;
+    country: string;
+    postcode: number;
+    coordinates: Coordinates;
+    timezone: Timezone;
 }
 
 export interface Login {
-    uuid: string,
-    username: string,
-    password: string,
-    salt: string,
-    md5: string,
-    sha1: string,
-    sha256: string
+    uuid: string;
+    username: string;
+    password: string;
+    salt: string;
+    md5: string;
+    sha1: string;
+    sha256: string;
 }
 
 export interface DateOfBirth {
@@ -82,7 +82,7 @@ export interface Info {
     version: string;
 }
 
-export interface Response {
+export interface APIResponse {
     person: Person;
     info: Info;
 }
@@ -92,14 +92,27 @@ export interface Error {
     description: string;
 }
 
+export interface Props extends AppReducer, DispatchProps {
+}
+
+export const actions = {
+    getAPIData: ():boolean => true
+}
+
+export interface DispatchProps {
+    getAPIData: typeof actions.getAPIData;
+}
+
 export interface AppReducer {
+    response: APIResponse | null;
 }
 
 export const appState: AppReducer = {
+    response: null
 };
 
 export const REQ_API_DATA = 'REQ_API_DATA';
 export const RCV_API_DATA = 'RCV_API_DATA';
 export const ERR_API_DATA = 'ERR_API_DATA';
 
-export const SERVICE_ENDPOINT = 'http://www.randomuser.me/API';
+export const SERVICE_ENDPOINT = '/API';

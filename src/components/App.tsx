@@ -1,16 +1,17 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Dispatch, bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
+    Props,
+    DispatchProps,
     AppReducer
 } from '../redux/constants/app';
 import {
     getAPIData
 } from '../redux/actions/app';
 
-class App extends Component<AppReducer> {
-    constructor(props) {
+class App extends Component<Props> {
+    constructor(props: Props) {
         super(props);
 
         this.loadButton = this.loadButton.bind(this);
@@ -19,26 +20,30 @@ class App extends Component<AppReducer> {
     loadButton(event) {
         event.preventDefault();
 
-        this.props.actions.getAPIData();
+        this.props.getAPIData();
     }
 
     render() {
+        const { response } = this.props;console.log(response);
         return (
+            <>
+                <input id='loadButton' className='input' type='button' title='LOAD' value='LOAD' onClick={this.loadButton} />
+            </>
         );
     }
 }
 
-const mapStateToProps = state:AppReducer => ({
-
+const mapStateToProps = (state:any):AppReducer => ({
+    response: state.appComponent.response
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    actions: bindActionCreators({
+    ...bindActionCreators({
         getAPIData
     }, dispatch)
 });
 
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(App));
+)(App);
